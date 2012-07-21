@@ -1,0 +1,21 @@
+{
+	"name"				:	"Stakhanov Info",
+	"version"			:	"0.1.23",
+	"description"		:	"Новости с сайта stakhanov.org.ua",
+	"options_page"		:   "options.html",
+    "background_page"   :   "background.html",
+
+    "browser_action" 	: 
+    {
+        "default_title" : "Новости с сайта stakhanov.org.ua",
+        "default_icon" : "img/favicon.ico",
+        "default_popup" : "popup.html"
+    },
+
+    "permissions": 
+    [
+        "notifications",
+    	"http://www.stakhanov.org.ua/*",
+        "http://board.stakhanov.org.ua/*"
+    ]
+}

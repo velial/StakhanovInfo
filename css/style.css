@@ -1,0 +1,58 @@
+* {
+font-family: Arial, Helvetica, sans-serif;
+font-size:12px;
+}
+
+A:link {text-decoration: none; color:#0000ff;}
+A:visited {text-decoration: none; color:#0000ff;}
+A:active {text-decoration: none; color:#0000ff;}
+A:hover {text-decoration: none; color: red;}
+
+body {
+  overflow: hidden;
+  margin: 0px;
+  padding: 5px;
+  background: white;
+  width:500px;
+}
+
+.item {
+	margin:0px;
+}
+
+#news_title {
+	background:#eeeeee;
+	font-weight:bold;
+}
+
+#news {
+}
+
+#decl_title {
+	margin-top:5px;
+	font-weight:bold;
+	background:#eeeeee;
+}
+
+#decl {
+}
+
+#usfl_links {
+	margin-top:5px;
+	font-weight:bold;
+	background:#eeeeee;
+}
+
+#ulnk {
+	
+}
+
+#version {
+	font-size:8px;
+	text-align:right;
+}
+
+#version a {
+	font-size:8px;
+	text-align:right;
+}

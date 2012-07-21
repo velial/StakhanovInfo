@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Настройки Stakhanov Info</title>
+<link rel="stylesheet" type="text/css" href="css/style_options.css">
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+function save_options()
+{
+	var select_news = document.getElementById('count_news');
+	var count_news = select_news.children[select_news.selectedIndex].value;
+	var select_decl = document.getElementById('count_decl');
+	var count_decl = select_decl.children[select_decl.selectedIndex].value;
+	var select_font = document.getElementById('font_size');
+	var font_size = select_font.children[select_font.selectedIndex].value;
+	var select_refresh = document.getElementById('refresh_min');
+	var refresh_min = select_refresh.children[select_refresh.selectedIndex].value;
+	var select_notif_news = document.getElementById('notif_news');
+	var notif_news = select_notif_news.children[select_notif_news.selectedIndex].value;
+	var select_notif_decl = document.getElementById('notif_decl');
+	var notif_decl = select_notif_decl.children[select_notif_decl.selectedIndex].value;
+
+	window.localStorage.count_news = count_news;
+	window.localStorage.count_decl = count_decl;
+	window.localStorage.font_size = font_size;
+	window.localStorage.refresh_min = refresh_min;
+	window.localStorage.notif_news = notif_news;
+	window.localStorage.notif_decl = notif_decl;
+
+	var status = document.getElementById("status");
+  	status.innerHTML = "Настройки сохранены";
+  	setTimeout(function() 
+  	{
+    	status.innerHTML = "";
+	}, 750);
+}
+
+function restore_options()
+{
+	var count_news = window.localStorage['count_news'];
+	var count_decl = window.localStorage['count_decl'];
+	var font_size = window.localStorage['font_size'];
+	var refresh_min = window.localStorage['refresh_min'];
+	var notif_news = window.localStorage['notif_news'];
+	var notif_decl = window.localStorage['notif_decl'];
+
+	var select_news = document.getElementById("count_news");
+	for(var i=0; i<select_news.children.length; i++)
+	{
+		var child = select_news.children[i];
+		if (child.value == count_news)
+		{
+			child.selected = "true";
+			break;
+		}
+	}
+
+	var select_decl = document.getElementById("count_decl");
+	for(var i=0; i<select_decl.children.length; i++)
+	{
+		var child = select_decl.children[i];
+		if (child.value == count_decl)
+		{
+			child.selected = "true";
+			break;
+		}
+	}
+
+	var select_font = document.getElementById("font_size");
+	for(var i=0; i<select_font.children.length; i++)
+	{
+		var child = select_font.children[i];
+		if (child.value == font_size)
+		{
+			child.selected = "true";
+			break;
+		}
+	}
+
+	var select_refresh = document.getElementById("refresh_min");
+	for(var i=0; i<select_refresh.children.length; i++)
+	{
+		var child = select_refresh.children[i];
+		if (child.value == refresh_min)
+		{
+			child.selected = "true";
+			break;
+		}
+	}
+
+	var select_notif_news = document.getElementById("notif_news");
+	for(var i=0; i<select_notif_news.children.length; i++)
+	{
+		var child = select_notif_news.children[i];
+		if (child.value == notif_news)
+		{
+			child.selected = "true";
+			break;
+		}
+	}
+
+
+	var select_notif_decl = document.getElementById("notif_decl");
+	for(var i=0; i<select_notif_decl.children.length; i++)
+	{
+		var child = select_notif_decl.children[i];
+		if (child.value == notif_decl)
+		{
+			child.selected = "true";
+			break;
+		}
+	}
+}
+
+$(document).ready(function()
+{
+	restore_options();
+});
+
+</script>
+</head>
+<body>
+<h2>Настройки Stakhanov Info</h2>
+<p>Сколько новостей отображать?
+<select id="count_news">
+	<option value="5">5</option>
+	<option value="7">7</option>
+	<option value="10">10</option>
+</select>
+</p>
+<p>Сколько объявлений отображать?
+<select id="count_decl">
+	<option value="5">5</option>
+	<option value="7">7</option>
+	<option value="10">10</option>
+</select>
+</p>
+<p>Размер шрифта?
+<select id="font_size">
+	<option value="10">10</option>
+	<option value="12">12</option>
+	<option value="14">14</option>
+	<option value="16">16</option>
+</select>
+</p>
+<p>Обновлять данные каждые
+<select id="refresh_min">
+	<option value="1">1</option>
+	<option value="3">3</option>
+	<option value="5">5</option>
+	<option value="10">10</option>
+	<option value="15">15</option>
+	<option value="30">30</option>
+	<option value="60">60</option>
+</select> минут
+</p>
+<p>Показывать Извещения о новых новостях?
+<select id="notif_news">
+	<option value="yes">Да</option>
+	<option value="no">Нет</option>
+</select>
+</p>
+<p>Показывать Извещения о новых объявлениях?
+<select id="notif_decl">
+	<option value="yes">Да</option>
+	<option value="no">Нет</option>
+</select>
+</p>
+<hr>
+<button onclick="save_options()">Сохранить</button>
+<div id="status"></div>
+<br><br><hr>
+<pre style="font-size:10px;">Последние изменения:
+0.1.23
++ Добавлены полезные ссылки
++ Добавлено извещение о добавлении новости или объявления
++ Добавлена настройка извещений
+! Исправлены замеченные ошибки (добавлены новые :) )
+
+0.1.18
+! JQuery встроен в расширение
+! Проверяется заходил ли хоть раз Пользователь в Настройки расширения
+! Новые иконки
+
+0.1.11
+! Изменен запрос RSS
+
+0.1.9
+! Игнорируется настройка частоты обновления данных (выставлена равной 30 минутами)
+
+0.1.8
++ Если сть "новое", то меняется иконка
+
+0.1.7
++ Все загружается в фоне и кэшируется
++ Показывается все только из кэша
++ Вынесено в настройки через сколько минут обновлять кэш
+
+0.1.6
++ Размер шрифта для показа устанавливается в настройках
+
+0.1.5
++ В настройках устанавливается сколько новостей показывать
++ В настройках устанавливается сколько объявлений показывать
+
+0.1-0.1.4
++ Сделан только базовый каркас расширения Хрома
+! Сделано много, всего уже и не помню
+</pre>
+</body>
+</html>

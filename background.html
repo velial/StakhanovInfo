@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+function getVersion()
+{
+	$.getJSON('manifest.json', function(data)
+	{
+		$.each(data, function(key,value)
+		{
+			if (key == 'version')
+			{
+				window.localStorage['ver'] = value;
+			}
+		});
+	});
+}
+
+function getMainDataFromServer()
+{
+	$.get("http://www.stakhanov.org.ua/rss.xml?ver="+window.localStorage['ver'], function(data) {
+	    var $xml = $(data);
+	    var i=0;
+	    $xml.find("item").each(function() {
+	        var $this = $(this),
+	            item = {
+	                title: $this.find("title").text(),
+	                link: $this.find("link").text()
+	        }
+        	if (i == 0)
+        	{
+        		if ((item.link != window.localStorage['nl'+i]) && (window.localStorage['new'] == 'no'))
+        		{
+        			chrome.browserAction.setIcon({"path":"img/favicon_new.ico"});
+        			window.localStorage['new'] = 'yes';
+        			var notif = webkitNotifications.createNotification(
+        							'img/favicon_new.ico',
+        							'Stakhanov Info',
+        							'Опубликована новость...'
+        			);
+        			notif.show();
+        		}
+        	}
+
+        	window.localStorage['nt'+i] = item.title;
+        	window.localStorage['nl'+i] = item.link;
+        	i++;
+	    });
+	});
+
+	$.getJSON('http://board.stakhanov.org.ua/index.php?do=json', function(data)
+	{
+		$.each(data, function(key,value)
+		{
+			if (key == 0)
+			{
+				if ((value.link != window.localStorage['dl'+key]) && (window.localStorage['new'] == 'no'))
+				{
+        			chrome.browserAction.setIcon({"path":"img/favicon_new.ico"});
+        			window.localStorage['new'] = 'yes';
+        			var notif = webkitNotifications.createNotification(
+        							'img/favicon_new.ico',
+        							'Stakhanov Info',
+        							'Опубликовано объявление...'
+        			);
+        			notif.show();
+				}
+			}
+			window.localStorage['dt'+key] = value.title;
+			window.localStorage['dl'+key] = value.link;
+		});
+	});
+}
+
+$(document).ready(function(){
+	var refresh_min = window.localStorage['refresh_min'];
+	if (refresh_min == null) {
+		refresh_min = 5;
+		window.localStorage['refresh_min'] = refresh_min;
+	}
+
+	getVersion();
+	getMainDataFromServer();
+	
+	var refresh = setInterval(function()
+	{
+		getMainDataFromServer();
+	}, 1000*60*refresh_min);
+});
+
+</script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+function makePopup()
+{
+    $.getJSON('manifest.json', function(data)
+    {
+        $.each(data, function(key,value)
+        {
+            if (key == 'version')
+            {
+                window.localStorage['ver'] = value;
+            }
+        });
+    });
+    $('#version').html("<a href='options.html' target='_blank'>" + window.localStorage['ver'] + "</a>");
+
+    chrome.browserAction.setIcon({"path":"img/favicon.ico"});
+    window.localStorage['new'] = 'no';
+
+    var count_news = window.localStorage['count_news'];
+    if(count_news == null) 
+    {
+        count_news = 10;
+        window.localStorage['count_news'] = count_news;
+    }
+    for (var i=0; i<count_news; i++)
+    {
+        $('#news').append("<p class='item'><a target='_blank' href='"+window.localStorage['nl'+i]+"'>"+window.localStorage['nt'+i]+"</a></p>");
+    }
+
+    var count_decl = window.localStorage['count_decl'];
+    if (count_decl == null)
+    {
+        count_decl = 10;
+        window.localStorage['count_decl'] = count_decl;    
+    }
+    for (var i=0; i<count_news; i++)
+    {
+        $('#decl').append("<p class='item'><a target='_blank' href='"+window.localStorage['dl'+i]+"'>"+window.localStorage['dt'+i]+"</a></p>");
+    }
+
+    var font_size = window.localStorage['font_size'];
+    if (font_size == null)
+    {
+        font_size = 10;
+        window.localStorage['font_size'] = font_size;
+    }
+    $('a').css('font-size',font_size);
+}
+</script>
+</head>
+<body width="150px" onLoad='makePopup();'>
+<div id='news_title'>Последние новости:</div>
+<div id="news"></div>
+<div id='decl_title'>Последние объявления:</div>
+<div id="decl"></div>
+<div id='usfl_links'>Полезные ссылки:</div>
+<div id="ulnk">Добавить: <a href="http://www.stakhanov.org.ua/addnews.html" target="_blank">новость</a>&nbsp;|&nbsp;<a href="http://board.stakhanov.org.ua/index.php?do=add"  target="_blank">объявление</a><br /><a href="http://www.stakhanov.org.ua/index.php?do=lastcomments" target="_blank">Последние комментарии</a></div>
+<div id="version"></div>
+</body>
